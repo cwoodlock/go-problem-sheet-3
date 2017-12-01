@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
-import "math/rand"
-import "time"
-import "regexp"
+import (
+	"fmt"
+	"math/rand"
+	"regexp"
+	"strings"
+	"time"
+)
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
@@ -63,4 +66,41 @@ func ElizaResponce(input string) string {
 
 	return responce[rand.Intn(len(responce))]
 
+}
+
+func Reflect(input string) string {
+	boundries := regexp.MustCompile(`\b`)
+	words := boundries.Split(input, -1)
+
+	reflectedWords := [][]string{
+		{`i`, `you`},
+		{`you`, `i`},
+		{`were`, `was`},
+		{`am`, `are`},
+		{`are`, `am`},
+		{`was`, `were`},
+		{`i'm`, `you are`},
+		{`you're`, `I am`},
+		{`you`, `me`},
+		{`my`, `your`},
+		{`me`, `you`},
+		{`you've`, `I have`},
+		{`you'll`, `I will`},
+		{`your`, `my`},
+		{`yours`, `mine`},
+		{`myself`, `yourself`},
+		{`any`, `some`},
+		{`some`, `any`},
+	}
+
+	//Loop through each word and if there is a match do a reflection
+	for i, word := range words {
+		for _, reflectedWords := range reflectedWords {
+			if matched, _ := regexp.MatchString(reflectedWords[0], word); matched {
+				words[i] = reflectedWords[1]
+				break
+			}
+		}
+	}
+	return strings.Join(words, ``)
 }
