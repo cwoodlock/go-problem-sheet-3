@@ -28,6 +28,22 @@ func main() {
 	fmt.Println(ElizaResponce("My grandfather was French!"))
 	fmt.Println()
 
+	fmt.Println("I am happy.")
+	fmt.Println(ElizaResponce("I am happy."))
+	fmt.Println()
+
+	fmt.Println("I am not happy with your responses.")
+	fmt.Println(ElizaResponce("I am not happy with your responses."))
+	fmt.Println()
+
+	fmt.Println("I am not sure that you understand the effect that your questions are having on me.")
+	fmt.Println(ElizaResponce("I am not sure that you understand the effect that your questions are having on me."))
+	fmt.Println()
+
+	fmt.Println("I am supposed to just take what you’re saying at face value?")
+	fmt.Println(ElizaResponce("I am supposed to just take what you’re saying at face value?"))
+	fmt.Println()
+
 }
 
 func ElizaResponce(input string) string {
@@ -35,6 +51,11 @@ func ElizaResponce(input string) string {
 	if matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`, input); matched {
 		return "Why don’t you tell me more about your father?"
 	}
+
+	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+	if matched := re.MatchString(input); matched {
+		return re.ReplaceAllString(input, "How do know you are $1?")
+	} /*FindStringSubMatch*/
 
 	responce := [3]string{"I’m not sure what you’re trying to say. Could you explain it to me?",
 		"How does that make you feel?",
