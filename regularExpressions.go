@@ -52,7 +52,7 @@ func ElizaResponce(input string) string {
 		return "Why don’t you tell me more about your father?"
 	}
 
-	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+	re := regexp.MustCompile(`(?i).*\bi am|i'm|im\b.*([^.?!]*)(?i)[.?!]?`)
 	if matched := re.MatchString(input); matched {
 		return re.ReplaceAllString(input, "How do know you are $1?")
 	} /*FindStringSubMatch*/
