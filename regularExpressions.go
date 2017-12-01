@@ -3,8 +3,11 @@ package main
 import "fmt"
 import "math/rand"
 import "time"
+import "regexp"
 
 func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	fmt.Println("People say I look like both my mother and father.")
 	fmt.Println(ElizaResponce("People say I look like both my mother and father."))
 	fmt.Println()
@@ -28,7 +31,11 @@ func main() {
 }
 
 func ElizaResponce(input string) string {
-	rand.Seed(time.Now().UTC().UnixNano())
+
+	if matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`, input); matched {
+		return "Why don’t you tell me more about your father?"
+	}
+
 	responce := [3]string{"I’m not sure what you’re trying to say. Could you explain it to me?",
 		"How does that make you feel?",
 		"Why do you say that?"}
